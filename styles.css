@@ -8,9 +8,46 @@
 }
 .word-input
 {
-    width: clamp(100px, 95%, 700px);
+    width: clamp(100px, 98%, 600px);
     height: clamp(30px, 50%, 80px);
     font-size: 50px;
-    padding-left: 10px;
+    padding-left: 15px;
+    border-radius: 10px;
     text-transform: uppercase;
+    outline: none;
+    border: 1px solid #ccc;
+    color: rgb(100, 99, 99);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.countdown-bar
+{
+    position: relative;
+    width: clamp(130px, 100%, 610px);
+    border-radius: 2px;
+    height: clamp(2px, 50%, 5px);
+    background-color: gray;
+    color: green;
+}
+.countdown-bar::before
+{
+    content: '';
+    display: flex;
+    align-items: center;
+    position: absolute;
+    background-color: rgb(156, 255, 7);
+    height: 100%;
+    width: calc(var(--width, 100) * 1%);
+    border-radius: 2px;
+    max-width: 100%;
+}
+.letter-seq
+{
+    margin-bottom: 20px;
+    font-size: 130px;
+    font-family:'Courier New', Courier, monospace;
+    color: rgb(63, 63, 63);
 }
