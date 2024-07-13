@@ -23,11 +23,35 @@ async function checkIfWordExists(word) {
         });
         
         const data = await response.json();
+        return data.exists;
     } catch (error) {
         console.error('Error checking the word:', error);
     }
 }
 
+const input = document.getElementsByClassName("word-input")[0];
 
-checkIfWordExists('table');
-fetchRandomLetters();
+function startGame() {
+    fetchRandomLetters()
+
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            const word = input.value.trim();
+            if (word && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText)) {
+                checkIfWordExists(word).then(exists => {
+                    if (exists) {
+                        fetchRandomLetters()
+                        input.value = ''; // Clear input after submission
+                    }
+                })
+            }
+        }
+    });
+}
+
+const button = document.querySelector('.play-but');
+button.addEventListener('click', () => {
+    button.disabled = true;
+    startGame();
+    button.blur(); // Remove focus
+});

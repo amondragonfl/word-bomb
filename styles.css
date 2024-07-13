@@ -50,4 +50,40 @@
     font-size: 130px;
     font-family:'Courier New', Courier, monospace;
     color: rgb(63, 63, 63);
+    text-transform: uppercase;
+}
+
+.play-but
+{
+    margin-top: 20px;
+    width: 200px;
+    height: 50px;
+    font-family: "Roboto", sans-serif;
+    background-color: rgb(147, 236, 135);
+    color: white;
+    font-size: 28px;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;
+    border: 0px;
+}
+
+.play-but:hover, .play-but:focus, .play-but:active
+{
+    box-shadow: 0, 0, 20px, rgba(0, 0, 0, 0.5);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.play-but:disabled {
+    background-color: gray; 
+    cursor: not-allowed;
+    box-shadow: none; 
+    transform: none; 
 }
