@@ -30,28 +30,60 @@ async function checkIfWordExists(word) {
 }
 
 const input = document.getElementsByClassName("word-input")[0];
+const button = document.querySelector('.play-but');
+const countdown = document.getElementsByClassName("countdown-bar")[0];
+const computedStyleCountdown = getComputedStyle(countdown)
+input.disabled = true;
 
-function startGame() {
-    fetchRandomLetters()
-
-    input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            const word = input.value.trim();
-            if (word && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText)) {
-                checkIfWordExists(word).then(exists => {
-                    if (exists) {
-                        fetchRandomLetters()
-                        input.value = ''; // Clear input after submission
-                    }
-                })
-            }
+function handleInput(event) // Handle enter key press to sumbit word 
+{
+    if (event.key === 'Enter') {
+        const word = input.value.trim();
+        if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText)) {
+            checkIfWordExists(word).then(exists => {
+                if (exists) {
+                    fetchRandomLetters()
+                    input.value = '';
+                    countdown.style.setProperty("--width", 100)
+                }
+            })
         }
-    });
+    }
 }
 
-const button = document.querySelector('.play-but');
+
+function startGame() {
+    input.addEventListener('keydown', handleInput);
+    fetchRandomLetters()
+    
+    const intervalId = setInterval(() => {
+        const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
+        if (width > 0)
+        {
+                countdown.style.setProperty("--width", width - 0.9)
+        }
+        else
+        {
+            stopGame(intervalId)
+        }
+    }, 5)
+    
+}
+
+function stopGame(interID)
+{
+    input.removeEventListener('keydown', handleInput);
+    clearInterval(interID);
+    input.disabled = true;
+    countdown.style.setProperty("--width", 100)
+    document.getElementsByClassName('letter-seq')[0].innerText = "Game Over";
+    button.disabled = false;
+}
+
 button.addEventListener('click', () => {
     button.disabled = true;
+    input.disabled = false;
+    button.blur();
+    input.focus();
     startGame();
-    button.blur(); // Remove focus
 });
