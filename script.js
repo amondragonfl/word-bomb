@@ -12,4 +12,22 @@ async function fetchRandomLetters()
     }
 }
 
+async function checkIfWordExists(word) {
+    try {
+        const response = await fetch('http://127.0.0.1:5000/check-word', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ word: word })
+        });
+        
+        const data = await response.json();
+    } catch (error) {
+        console.error('Error checking the word:', error);
+    }
+}
+
+
+checkIfWordExists('table');
 fetchRandomLetters();

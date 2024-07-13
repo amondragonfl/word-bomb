@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import sqlite3
 from flask_cors import CORS
 import random
@@ -29,6 +29,22 @@ def random_letters():
     random_char_index = random.randint(0, len(word)-2)
     letters = word[random_char_index:random_char_index+2]
     return jsonify(letters=letters)
+
+# POST query checks if word exists 
+@app.route('/check-word', methods=['POST'])
+def check_word():
+    data = request.json
+    word = data.get('word').lower()
+    
+    conn = sqlite3.connect('words.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT COUNT(*) FROM words WHERE word = ?', (word,))
+    exists = cursor.fetchone()[0] > 0
+    
+    conn.close()
+    return jsonify(exists=exists)
+
 
 
 if __name__ == '__main__':
