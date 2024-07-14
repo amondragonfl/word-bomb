@@ -55,6 +55,7 @@ skipButton.addEventListener('click', function() {
     skipButton.blur();
     if (gameRunning && skips>0)
     {
+        message.innerText = "";
         playSound(clickSound)
         skips -= 1;
         input.value = '';
@@ -63,7 +64,10 @@ skipButton.addEventListener('click', function() {
         countdown.style.setProperty("--width", 100)
         fetchRandomLetters()
     }
-    else {playSound(incorrectSound)} 
+    else {
+        if (skips<=0) { message.innerText = "no more skips left"; }
+        playSound(incorrectSound)
+    }
     input.focus();
 });
 
