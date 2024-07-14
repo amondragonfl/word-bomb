@@ -66,11 +66,39 @@ skipButton.addEventListener('click', function() {
     else {playSound(incorrectSound)} 
 });
 
+const musicButton = document.getElementById("music-button");
+musicButton.addEventListener('click', function(){
+    musicButton.blur();
+    playSound(clickSound)
+    if (backgroundMusic.paused)
+    {
+        backgroundMusic.play();
+        enableMusic = true;
+    } else 
+    {
+        backgroundMusic.pause();
+        enableMusic = false;
+    }
+
+})
+
+const restartButton = document.getElementById("restart-button");
+restartButton.addEventListener('click', function() {
+    restartButton.blur();
+    if (gameRunning)
+    {
+        playSound(clickSound)
+        stopGame();
+    }
+    else {playSound(incorrectSound)} 
+});
+
 
 
 input.disabled = true;
 let usedWords = [];
 let score = 0;
+let enableMusic = true;
 let wordCount = 0;
 let skips = 3;
 let percentageSubtract = 0.1;
@@ -193,7 +221,7 @@ function stopGame()
 }
 
 button.addEventListener('click', () => {
-    backgroundMusic.play()
+    if (enableMusic && backgroundMusic.paused) {  backgroundMusic.play() }
     playSound(clickSound)
     message.innerText = "starting...";
     button.disabled = true;
