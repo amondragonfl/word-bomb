@@ -61,9 +61,9 @@ skipButton.addEventListener('click', function() {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
         fetchRandomLetters()
-        input.focus();
     }
     else {playSound(incorrectSound)} 
+    input.focus();
 });
 
 const musicButton = document.getElementById("music-button");
@@ -79,7 +79,7 @@ musicButton.addEventListener('click', function(){
         backgroundMusic.pause();
         enableMusic = false;
     }
-
+    input.focus();
 })
 
 const restartButton = document.getElementById("restart-button");
@@ -181,6 +181,7 @@ function startGame() {
     percentageSubtract = 0.1;
     score_text.innerText = "score: " + String(score)
     wordCountText.innerText = "words: " + wordCount;
+    skipsText.innerText = "Skips: " + String(skips)
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
@@ -203,6 +204,8 @@ function startGame() {
 
 function stopGame()
 {
+    skips = 3;
+    skipsText.innerText = "Skips: " + String(skips)
     gameRunning = false;
     usedWords = []
     if (!clockTickSound.paused) {
