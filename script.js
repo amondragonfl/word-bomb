@@ -74,10 +74,12 @@ musicButton.addEventListener('click', function(){
     if (backgroundMusic.paused)
     {
         backgroundMusic.play();
+        backgroundMusic.currentTime = 0; 
         enableMusic = true;
     } else 
     {
         backgroundMusic.pause();
+        backgroundMusic.currentTime = 0; 
         enableMusic = false;
     }
     input.focus();
@@ -175,6 +177,10 @@ function handleInput(event) // Handle enter key press to sumbit word
 function startGame() {
     gameRunning = true;
     clockTickSound.play();
+    if (enableMusic && backgroundMusic.paused) {  
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play() 
+    }
     score = 0;
     wordCount = 0;
     skips = 3;
@@ -225,7 +231,6 @@ function stopGame()
 }
 
 button.addEventListener('click', () => {
-    if (enableMusic && backgroundMusic.paused) {  backgroundMusic.play() }
     playSound(clickSound)
     message.innerText = "starting...";
     button.disabled = true;
