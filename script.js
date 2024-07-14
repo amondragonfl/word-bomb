@@ -32,6 +32,7 @@ async function checkIfWordExists(word) {
     }
 }
 
+let gameRunning = false;
 const input = document.getElementsByClassName("word-input")[0];
 const button = document.querySelector('.play-but');
 const countdown = document.getElementsByClassName("countdown-bar")[0];
@@ -39,6 +40,7 @@ const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
 const score_text = document.getElementsByClassName('score')[0];
 const wordCountText = document.getElementsByClassName('words')[0];
+const skipsText = document.getElementsByClassName('skips')[0];
 const correctSound = new Audio('assets/correct_sound.wav');
 const incorrectSound = new Audio('assets/incorrect_sound.wav');
 const clickSound = new Audio('assets/click_sound.wav');
@@ -48,10 +50,29 @@ const backgroundMusic = new Audio('assets/background_music.mp3');
 backgroundMusic.loop = true;
 clockTickSound.loop = true;
 
+const skipButton = document.getElementById("skip-button");
+skipButton.addEventListener('click', function() {
+    skipButton.blur();
+    if (gameRunning && skips>0)
+    {
+        playSound(clickSound)
+        skips -= 1;
+        skipsText.innerText = "Skips: " + String(skips)
+        const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
+        countdown.style.setProperty("--width", 100)
+        fetchRandomLetters()
+        input.focus();
+    }
+    else {playSound(incorrectSound)} 
+});
+
+
+
 input.disabled = true;
 let usedWords = [];
 let score = 0;
 let wordCount = 0;
+let skips = 3;
 let percentageSubtract = 0.1;
 
 function playShakeAnim()
@@ -96,7 +117,7 @@ function handleInput(event) // Handle enter key press to sumbit word
                     playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
-                    message.innerText = "..."
+                    message.innerText = "";
                     countdown.style.setProperty("--width", 100)
                 } 
                 else
@@ -123,9 +144,11 @@ function handleInput(event) // Handle enter key press to sumbit word
 
 
 function startGame() {
+    gameRunning = true;
     clockTickSound.play();
     score = 0;
     wordCount = 0;
+    skips = 3;
     usedWords = []
     percentageSubtract = 0.1;
     score_text.innerText = "score: " + String(score)
@@ -152,6 +175,7 @@ function startGame() {
 
 function stopGame()
 {
+    gameRunning = false;
     usedWords = []
     if (!clockTickSound.paused) {
         clockTickSound.pause();       
@@ -184,7 +208,7 @@ button.addEventListener('click', () => {
     {
         input.disabled = false;
         input.focus();
-        message.innerText = "...";
+        message.innerText = "";
         startGame(); 
     }
   })

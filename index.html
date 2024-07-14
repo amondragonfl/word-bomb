@@ -8,15 +8,33 @@
 </head>
 <body>
     <div class="game-wrapper">
-        <div class="stats">
-            <div class="score">Score: 0</div>
-            <div class="words">Words: 0</div>
-        </div>
+        <div class="message">Press play to start</div>
         <div class="letter-seq">Word Bomb</div>
         <div class="countdown-bar" style="--width: 100"></div>
         <input type="text" class="word-input">
+        <div class="stats">
+            <div class="score">Score: 0</div>
+            <div class="words">Words: 0</div>
+            <div class="skips">Skips: 3</div>
+        </div>
         <button class="play-but">▶</button>
-        <div class="message">Press play to start</div>
+        <div class="options-wrapper">
+            <div class="option-button-wrapper">
+                <button class="option-button" id="skip-button">
+                    <img src="assets/skip.png">
+                </button>
+            </div>
+            <div class="option-button-wrapper">
+                <button class="option-button">
+                    <img src="assets/setting.png">
+                </button>
+            </div>
+            <div class="option-button-wrapper">
+                <button class="option-button">
+                    <img src="assets/restart.png">
+                </button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

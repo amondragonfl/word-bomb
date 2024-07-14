@@ -75,7 +75,7 @@
 }
 .letter-seq
 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: clamp(60px, 15vw, 90px);
     text-align: center;
     font-family:'Courier New', Courier, monospace;
@@ -131,26 +131,46 @@
 .stats
 {
     display: flex;
+    align-items: center;
 }
 
-.score
+.score, .skips, .words
 {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-left: 30px;
     font-size: 25px;
     text-align: left;
     font-family:'Courier New', Courier, monospace;
     color: rgb(63, 63, 63);
     text-transform: uppercase; 
+    margin-top: 20px;
 }
 
-.words
-{
-    margin-left: 50px;
-    margin-bottom: 20px;
-    font-size: 25px;
-    text-align: left;
-    font-family:'Courier New', Courier, monospace;
-    color: rgb(63, 63, 63);
-    text-transform: uppercase; 
+.option-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
 }
+.option-button img
+{
+    opacity: 30%;
+    width: 30px;
+    height: 30px;
+}
+.option-button:focus img, .option-button:hover img
+{
+    opacity: 70%;
+}
+.options-wrapper 
+{
+    display: flex;
+}
+.option-button-wrapper
+{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
 
