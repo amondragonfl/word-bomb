@@ -22,13 +22,15 @@ def _fetch_random_word():
     conn.close()
     return random_word
 
+
 # Server GET query that returns two random consecutive letters from a random word
 @app.route('/random-letters', methods=['GET']) 
 def random_letters():
     word = _fetch_random_word()
     random_char_index = random.randint(0, len(word)-2)
     letters = word[random_char_index:random_char_index+2]
-    return jsonify(letters=letters)
+    return jsonify(letters=letters, word=word)
+
 
 # POST query checks if word exists 
 @app.route('/check-word', methods=['POST'])

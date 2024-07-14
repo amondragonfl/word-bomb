@@ -11,6 +11,7 @@ async function fetchRandomLetters()
         document.getElementsByClassName('letter-seq')[0].innerText = data.letters;
     }  catch (error) {
         console.error('There was a problem fetching random letters:', error);
+        throw new Error('Server error');
     }
 }
 
@@ -27,7 +28,7 @@ async function checkIfWordExists(word) {
         const data = await response.json();
         return data.exists;
     } catch (error) {
-        console.error('Error checking the word:', error);
+        throw new Error('Server error');
     }
 }
 
@@ -84,6 +85,8 @@ function handleInput(event) // Handle enter key press to sumbit word
                     playShakeAnim();
                     message.innerText = "Word not found";
                 }
+            }).catch(error => {
+                message.innerText = "Server Error";
             })
         } else { 
             if (word.length <= 2) 
