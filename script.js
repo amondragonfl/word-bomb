@@ -117,7 +117,7 @@ function stopGame(interID)
 button.addEventListener('click', () => {
     message.innerText = "starting...";
     button.disabled = true;
-    fetch('http://127.0.0.1:5000')
+    fetch('http://127.0.0.1:5000/random-letters')
   .then(response => {
     if (!response.ok) {
         message.innerText = "Network respone not Ok"
