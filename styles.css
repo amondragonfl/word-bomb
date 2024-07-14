@@ -20,7 +20,7 @@
     color: rgb(100, 99, 99);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 13px;
     font-family: 'Courier New', Courier, monospace;
     transition: border-color 0.3s;
 }

@@ -107,7 +107,7 @@ function stopGame(interID)
     clearInterval(interID);
     input.disabled = true;
     countdown.style.setProperty("--width", 100)
-    document.getElementsByClassName('letter-seq')[0].innerText = "Game Over";
+    document.getElementsByClassName('letter-seq')[0].innerText = "word bomb";
     button.disabled = false;
     button.focus();
     input.value = '';
