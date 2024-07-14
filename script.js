@@ -57,6 +57,7 @@ skipButton.addEventListener('click', function() {
     {
         playSound(clickSound)
         skips -= 1;
+        input.value = '';
         skipsText.innerText = "Skips: " + String(skips)
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
