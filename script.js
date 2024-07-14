@@ -211,6 +211,7 @@ function startGame() {
 
 function stopGame()
 {
+    message.innerText = "";
     skips = 3;
     skipsText.innerText = "Skips: " + String(skips)
     gameRunning = false;
@@ -227,7 +228,6 @@ function stopGame()
     button.disabled = false;
     button.focus();
     input.value = '';
-    message.innerText = "Game Over";
 }
 
 button.addEventListener('click', () => {
