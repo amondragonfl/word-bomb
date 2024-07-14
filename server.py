@@ -29,7 +29,7 @@ def random_letters():
     word = _fetch_random_word()
     random_char_index = random.randint(0, len(word)-2)
     letters = word[random_char_index:random_char_index+2]
-    return jsonify(letters=letters, word=word)
+    return jsonify(letters=letters)
 
 
 # POST query checks if word exists 

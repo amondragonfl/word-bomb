@@ -1,5 +1,3 @@
-
-let lettersFromWord = ""
 let intervalId;
 
 async function fetchRandomLetters()
@@ -10,7 +8,6 @@ async function fetchRandomLetters()
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        lettersFromWord = data.word;
         document.getElementsByClassName('letter-seq')[0].innerText = data.letters;
     }  catch (error) {
         console.error('There was a problem fetching random letters:', error);
@@ -168,11 +165,12 @@ function stopGame()
     button.disabled = false;
     button.focus();
     input.value = '';
-    message.innerText = "you could have used " + lettersFromWord;
+    message.innerText = "Game Over";
 }
 
 button.addEventListener('click', () => {
     backgroundMusic.play()
+    playSound(clickSound)
     message.innerText = "starting...";
     button.disabled = true;
     fetch('http://127.0.0.1:5000/random-letters')
