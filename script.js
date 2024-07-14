@@ -34,8 +34,10 @@ const button = document.querySelector('.play-but');
 const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
+const score_text = document.getElementsByClassName('score')[0];
 input.disabled = true;
 let usedWords = [];
+let score = 0;
 
 function playShakeAnim()
 {
@@ -62,6 +64,8 @@ function handleInput(event) // Handle enter key press to sumbit word
             checkIfWordExists(word).then(exists => {
                 if (exists) {
                     usedWords.push(word);
+                    score += 150 * word.length;
+                    score_text.innerText = "score: " + String(score)
                     playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
@@ -88,6 +92,9 @@ function handleInput(event) // Handle enter key press to sumbit word
 
 
 function startGame() {
+    score = 0;
+    usedWords = []
+    score_text.innerText = "score: " + String(score)
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
