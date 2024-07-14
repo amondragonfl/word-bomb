@@ -128,10 +128,26 @@
     text-transform: uppercase; 
 }
 
+.stats
+{
+    display: flex;
+}
+
 .score
 {
     margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 25px;
+    text-align: left;
+    font-family:'Courier New', Courier, monospace;
+    color: rgb(63, 63, 63);
+    text-transform: uppercase; 
+}
+
+.words
+{
+    margin-left: 50px;
+    margin-bottom: 20px;
+    font-size: 25px;
     text-align: left;
     font-family:'Courier New', Courier, monospace;
     color: rgb(63, 63, 63);

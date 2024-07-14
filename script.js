@@ -1,3 +1,4 @@
+let lettersFromWord = ""
 async function fetchRandomLetters()
 {
     try {
@@ -6,6 +7,7 @@ async function fetchRandomLetters()
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        lettersFromWord = data.word;
         document.getElementsByClassName('letter-seq')[0].innerText = data.letters;
     }  catch (error) {
         console.error('There was a problem fetching random letters:', error);
@@ -35,9 +37,12 @@ const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
 const score_text = document.getElementsByClassName('score')[0];
+const wordCountText = document.getElementsByClassName('words')[0];
 input.disabled = true;
 let usedWords = [];
 let score = 0;
+let wordCount = 0;
+let percentageSubtract = 0.1;
 
 function playShakeAnim()
 {
@@ -65,7 +70,9 @@ function handleInput(event) // Handle enter key press to sumbit word
                 if (exists) {
                     usedWords.push(word);
                     score += 150 * word.length;
+                    wordCount += 1;
                     score_text.innerText = "score: " + String(score)
+                    wordCountText.innerText = "words: " + wordCount;
                     playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
@@ -93,8 +100,11 @@ function handleInput(event) // Handle enter key press to sumbit word
 
 function startGame() {
     score = 0;
+    wordCount = 0;
     usedWords = []
+    percentageSubtract = 0.1;
     score_text.innerText = "score: " + String(score)
+    wordCountText.innerText = "words: " + wordCount;
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
@@ -102,12 +112,14 @@ function startGame() {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
         if (width > 0)
         {
-                countdown.style.setProperty("--width", width - 0.1)
+                countdown.style.setProperty("--width", width - percentageSubtract)
         }
         else
         {
             stopGame(intervalId)
         }
+        if (wordCount > 15) {percentageSubtract = Math.min(wordCount/150.0, .65)}
+
     }, 5)
     
 }
