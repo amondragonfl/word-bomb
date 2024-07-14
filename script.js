@@ -41,7 +41,15 @@ function playShakeAnim()
     input.classList.add('shake');
     setTimeout(() => {
         input.classList.remove('shake');
-    }, 300);
+    }, 150);
+}
+
+function playPulseAnim()
+{
+    input.classList.add('pulse');
+    setTimeout(() => {
+        input.classList.remove('pulse');
+    }, 800);
 }
 
 
@@ -52,17 +60,25 @@ function handleInput(event) // Handle enter key press to sumbit word
         if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText)) {
             checkIfWordExists(word).then(exists => {
                 if (exists) {
+                    playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
+                    message.innerText = "..."
                     countdown.style.setProperty("--width", 100)
                 } 
                 else
                 {
                     playShakeAnim();
-                    message.innerText = "Word not found!";
+                    message.innerText = "Word not found";
                 }
             })
-        } else { playShakeAnim(); } 
+        } else { 
+            if (word.length <= 2) 
+                { message.innerText = "Word must be at least 3 characters";}
+            else { message.innerText = "Word must contain" + " " + document.getElementsByClassName('letter-seq')[0].innerText;}
+
+            playShakeAnim(); 
+        } 
     }
 }
 
@@ -95,6 +111,7 @@ function stopGame(interID)
     button.disabled = false;
     button.focus();
     input.value = '';
+    message.innerText = "Press play to start";
 }
 
 button.addEventListener('click', () => {
