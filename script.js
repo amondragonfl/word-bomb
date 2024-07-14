@@ -115,10 +115,27 @@ function stopGame(interID)
 }
 
 button.addEventListener('click', () => {
+    message.innerText = "starting...";
     button.disabled = true;
-    input.disabled = false;
-    button.blur();
-    input.focus();
-    message.innerText = "...";
-    startGame();
+    fetch('http://127.0.0.1:5000')
+  .then(response => {
+    if (!response.ok) {
+        message.innerText = "Network respone not Ok"
+        button.disabled = false;
+        throw new Error('Network response was not ok ' + response.statusText);
+    }
+    else
+    {
+        input.disabled = false;
+        input.focus();
+        message.innerText = "...";
+        startGame(); 
+    }
+  })
+  .catch(error => {
+    button.disabled = false;
+    message.innerText = "Unable to reach server";
+    console.error('Failed to reach the server:', error);
+  });
+  button.blur();
 });
