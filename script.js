@@ -35,6 +35,7 @@ const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
 input.disabled = true;
+let usedWords = [];
 
 function playShakeAnim()
 {
@@ -57,9 +58,10 @@ function handleInput(event) // Handle enter key press to sumbit word
 {
     if (event.key === 'Enter') {
         const word = input.value.trim();
-        if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText)) {
+        if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText) && !usedWords.includes(word)) {
             checkIfWordExists(word).then(exists => {
                 if (exists) {
+                    usedWords.push(word);
                     playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
@@ -75,6 +77,8 @@ function handleInput(event) // Handle enter key press to sumbit word
         } else { 
             if (word.length <= 2) 
                 { message.innerText = "Word must be at least 3 characters";}
+            else if (usedWords.includes(word)) 
+                {message.innerText = "Word was already used"} 
             else { message.innerText = "Word must contain" + " " + document.getElementsByClassName('letter-seq')[0].innerText;}
 
             playShakeAnim(); 
