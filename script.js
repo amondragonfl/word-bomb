@@ -33,7 +33,17 @@ const input = document.getElementsByClassName("word-input")[0];
 const button = document.querySelector('.play-but');
 const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
+const message = document.getElementsByClassName('message')[0];
 input.disabled = true;
+
+function playShakeAnim()
+{
+    input.classList.add('shake');
+    setTimeout(() => {
+        input.classList.remove('shake');
+    }, 300);
+}
+
 
 function handleInput(event) // Handle enter key press to sumbit word 
 {
@@ -45,9 +55,14 @@ function handleInput(event) // Handle enter key press to sumbit word
                     fetchRandomLetters()
                     input.value = '';
                     countdown.style.setProperty("--width", 100)
+                } 
+                else
+                {
+                    playShakeAnim();
+                    message.innerText = "Word not found!";
                 }
             })
-        }
+        } else { playShakeAnim(); } 
     }
 }
 
@@ -60,7 +75,7 @@ function startGame() {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
         if (width > 0)
         {
-                countdown.style.setProperty("--width", width - 0.9)
+                countdown.style.setProperty("--width", width - 0.1)
         }
         else
         {
@@ -78,6 +93,8 @@ function stopGame(interID)
     countdown.style.setProperty("--width", 100)
     document.getElementsByClassName('letter-seq')[0].innerText = "Game Over";
     button.disabled = false;
+    button.focus();
+    input.value = '';
 }
 
 button.addEventListener('click', () => {
@@ -85,5 +102,6 @@ button.addEventListener('click', () => {
     input.disabled = false;
     button.blur();
     input.focus();
+    message.innerText = "...";
     startGame();
 });

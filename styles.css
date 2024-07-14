@@ -8,7 +8,7 @@
 }
 .word-input
 {
-    width: clamp(100px, 98%, 600px);
+    width: clamp(100px, 95%, 600px);
     height: clamp(30px, 50%, 80px);
     font-size: 50px;
     padding-left: 15px;
@@ -23,10 +23,22 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+
+@keyframes shake
+{
+    0% {transform:translateX(8px)}
+    50% {transform:translateX(-8px)}
+    100% {transform:translateX(8px)}
+}
+
+.shake {
+    animation: shake 0.15s;
+}
+
 .countdown-bar
 {
     position: relative;
-    width: clamp(130px, 100%, 610px);
+    width: clamp(130px, 98%, 610px);
     border-radius: 2px;
     height: clamp(2px, 50%, 5px);
     background-color: gray;
@@ -47,7 +59,8 @@
 .letter-seq
 {
     margin-bottom: 20px;
-    font-size: 130px;
+    font-size: clamp(60px, 15vw, 90px);
+    text-align: center;
     font-family:'Courier New', Courier, monospace;
     color: rgb(63, 63, 63);
     text-transform: uppercase;
@@ -86,4 +99,24 @@
     cursor: not-allowed;
     box-shadow: none; 
     transform: none; 
+}
+
+.message
+{
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    color: rgb(63, 63, 63);
+    text-transform: uppercase; 
+}
+
+.score
+{
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: left;
+    font-family:'Courier New', Courier, monospace;
+    color: rgb(63, 63, 63);
+    text-transform: uppercase; 
 }
