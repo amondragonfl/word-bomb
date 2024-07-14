@@ -39,6 +39,14 @@ const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
 const score_text = document.getElementsByClassName('score')[0];
 const wordCountText = document.getElementsByClassName('words')[0];
+const correctSound = new Audio('assets/correct_sound.wav');
+const incorrectSound = new Audio('assets/incorrect_sound.wav');
+const clickSound = new Audio('assets/click_sound.wav');
+const lostSound = new Audio('assets/lost_sound.wav');
+const clockTickSound = new Audio('assets/clocktick_sound.wav');
+const backgroundMusic = new Audio('assets/background_music.mp3');
+backgroundMusic.loop = true;
+
 input.disabled = true;
 let usedWords = [];
 let score = 0;
@@ -61,6 +69,15 @@ function playPulseAnim()
     }, 800);
 }
 
+function playSound(sound) {
+    // Reset the sound if it's already playing
+    if (!sound.paused) {
+        sound.pause();
+        sound.currentTime = 0;
+    }
+    sound.play();
+}
+
 
 function handleInput(event) // Handle enter key press to sumbit word 
 {
@@ -69,6 +86,7 @@ function handleInput(event) // Handle enter key press to sumbit word
         if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText) && !usedWords.includes(word)) {
             checkIfWordExists(word).then(exists => {
                 if (exists) {
+                    playSound(correctSound)
                     usedWords.push(word);
                     score += 150 * word.length;
                     wordCount += 1;
@@ -83,6 +101,7 @@ function handleInput(event) // Handle enter key press to sumbit word
                 else
                 {
                     playShakeAnim();
+                    playSound(incorrectSound)
                     message.innerText = "Word not found";
                 }
             }).catch(error => {
@@ -96,6 +115,7 @@ function handleInput(event) // Handle enter key press to sumbit word
             else { message.innerText = "Word must contain" + " " + document.getElementsByClassName('letter-seq')[0].innerText;}
 
             playShakeAnim(); 
+            playSound(incorrectSound)
         } 
     }
 }
@@ -119,6 +139,7 @@ function startGame() {
         }
         else
         {
+            playSound(lostSound)
             stopGame(intervalId)
         }
         if (wordCount > 15) {percentageSubtract = Math.min(wordCount/150.0, .65)}
@@ -137,10 +158,12 @@ function stopGame(interID)
     button.disabled = false;
     button.focus();
     input.value = '';
-    message.innerText = "Press play to start";
+    message.innerText = "you could have used " + lettersFromWord;
 }
 
 button.addEventListener('click', () => {
+    playSound(clickSound)
+    backgroundMusic.play()
     message.innerText = "starting...";
     button.disabled = true;
     fetch('http://127.0.0.1:5000/random-letters')
