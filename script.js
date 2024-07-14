@@ -1,4 +1,7 @@
+
 let lettersFromWord = ""
+let intervalId;
+
 async function fetchRandomLetters()
 {
     try {
@@ -46,6 +49,7 @@ const lostSound = new Audio('assets/lost_sound.wav');
 const clockTickSound = new Audio('assets/clocktick_sound.wav');
 const backgroundMusic = new Audio('assets/background_music.mp3');
 backgroundMusic.loop = true;
+clockTickSound.loop = true;
 
 input.disabled = true;
 let usedWords = [];
@@ -122,6 +126,7 @@ function handleInput(event) // Handle enter key press to sumbit word
 
 
 function startGame() {
+    clockTickSound.play();
     score = 0;
     wordCount = 0;
     usedWords = []
@@ -131,7 +136,7 @@ function startGame() {
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
         if (width > 0)
         {
@@ -140,7 +145,7 @@ function startGame() {
         else
         {
             playSound(lostSound)
-            stopGame(intervalId)
+            stopGame()
         }
         if (wordCount > 15) {percentageSubtract = Math.min(wordCount/150.0, .65)}
 
@@ -148,10 +153,15 @@ function startGame() {
     
 }
 
-function stopGame(interID)
+function stopGame()
 {
+    usedWords = []
+    if (!clockTickSound.paused) {
+        clockTickSound.pause();       
+        clockTickSound.currentTime = 0; 
+    }
     input.removeEventListener('keydown', handleInput);
-    clearInterval(interID);
+    clearInterval(intervalId);
     input.disabled = true;
     countdown.style.setProperty("--width", 100)
     document.getElementsByClassName('letter-seq')[0].innerText = "word bomb";
@@ -162,7 +172,6 @@ function stopGame(interID)
 }
 
 button.addEventListener('click', () => {
-    playSound(clickSound)
     backgroundMusic.play()
     message.innerText = "starting...";
     button.disabled = true;
