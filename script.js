@@ -221,6 +221,7 @@ function updateCountdown()
                 skipCountDiamonds.innerText = Array(skips).fill('⬡').join(' ');
                 newRandomLetters(2);
                 countdown.style.setProperty("--width", 100)
+                input.value = '';
 
             }
         }
