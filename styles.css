@@ -172,10 +172,23 @@
     margin-top: 20px;
     margin-left: 10px;
 }
-
 body
 {
     background-color:#1d1d1d;
+}
+.word-count {
+    display: flex;
+    font-size: 50px;
+    text-align: center;
+    font-family: 'MyFont', sans-serif;
+    color: white;
+}
+.skip-count {
+    display: flex;
+    font-size: 25px;
+    text-align: center;
+    font-family: 'MyFont', sans-serif;
+    color: white;
 }
 
 

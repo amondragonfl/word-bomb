@@ -44,6 +44,7 @@ const clickSound = new Audio('assets/click_sound.wav');
 const lostSound = new Audio('assets/lost_sound.wav');
 const clockTickSound = new Audio('assets/clocktick_sound.wav');
 const backgroundMusic = new Audio('assets/background_music.mp3');
+const wordCountText = document.getElementsByClassName("word-count")[0];
 backgroundMusic.loop = true;
 clockTickSound.loop = true;
 
@@ -147,6 +148,7 @@ function handleInput(event) // Handle enter key press to sumbit word
                     fetchRandomLetters()
                     input.value = '';
                     message.innerText = "";
+                    wordCountText.innerText = String(wordCount);
                     countdown.style.setProperty("--width", 100)
                 } 
                 else
@@ -184,6 +186,8 @@ function startGame() {
     skips = 3;
     usedWords = []
     percentageSubtract = 0.1;
+
+    wordCountText.innerText = String(wordCount);
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
