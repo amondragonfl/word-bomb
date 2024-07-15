@@ -31,8 +31,7 @@ async function newRandomLetters(segmentLength)
 async function isWordInFile(word)
 {
     await loadWordsIfNeeded(wordFileUrl);
-    console.log(wordFileContent.includes(word))
-    return wordFileContent.includes(word);
+    return wordFileContent.includes(word.toLowerCase().trim());
 }
 
 let gameRunning = false;
