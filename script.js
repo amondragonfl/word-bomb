@@ -251,25 +251,9 @@ button.addEventListener('click', () => {
     playSound(clickSound)
     message.innerText = "starting...";
     button.disabled = true;
-    fetch('http://10.0.0.216:5000/random-letters')
-  .then(response => {
-    if (!response.ok) {
-        message.innerText = "Network respone not Ok"
-        button.disabled = false;
-        throw new Error('Network response was not ok ' + response.statusText);
-    }
-    else
-    {
-        input.disabled = false;
-        input.focus();
-        message.innerText = "";
-        startGame(); 
-    }
-  })
-  .catch(error => {
-    button.disabled = false;
-    message.innerText = "Unable to reach server";
-    console.error('Failed to reach the server:', error);
-  });
-  button.blur();
+    input.disabled = false;
+    input.focus();
+    message.innerText = "";
+    startGame(); 
+    button.blur();
 });
