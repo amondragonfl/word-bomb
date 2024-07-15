@@ -1,39 +1,43 @@
 let intervalId;
+let wordFileContent = null;
+let wordFileUrl = "./words_alpha.txt"
 
-async function fetchRandomLetters()
+async function loadFile(url)
 {
-    try {
-        const response = await fetch('http://127.0.0.1:5000/random-letters');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        document.getElementsByClassName('letter-seq')[0].innerText = data.letters;
-    }  catch (error) {
-        console.error('There was a problem fetching random letters:', error);
-        throw new Error('Server error');
+    const response = await fetch(url);
+    const text = await response.text();
+    return text.split('\n').map(word => word.trim());
+}
+
+async function loadWordsIfNeeded(url) {
+    if (!wordFileContent) {
+        wordFileContent = await loadFile(url);
     }
 }
 
-async function checkIfWordExists(word) {
-    try {
-        const response = await fetch('http://127.0.0.1:5000/check-word', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ word: word })
-        });
-        
-        const data = await response.json();
-        return data.exists;
-    } catch (error) {
-        throw new Error('Server error');
+async function newRandomLetters(segmentLength)
+{
+    await loadWordsIfNeeded(wordFileUrl);
+    const randomLineNumber = Math.floor(Math.random() * wordFileContent.length);
+    const word = wordFileContent[randomLineNumber].trim();
+    if (word.length < segmentLength)
+    {
+        return word;
     }
+    const randomIndexStart = Math.floor(Math.random()*(word.length-segmentLength + 1));
+    letterSequence.innerText = word.substring(randomIndexStart, randomIndexStart+segmentLength);
+}
+
+async function isWordInFile(word)
+{
+    await loadWordsIfNeeded(wordFileUrl);
+    console.log(wordFileContent.includes(word))
+    return wordFileContent.includes(word);
 }
 
 let gameRunning = false;
 const input = document.getElementsByClassName("word-input")[0];
+const letterSequence = document.getElementsByClassName('letter-seq')[0];
 const button = document.querySelector('.play-but');
 const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
@@ -65,7 +69,7 @@ skipButton.addEventListener('click', function() {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
         skipCountDiamonds.innerText = Array(skips).fill('◇').join(' ');
-        fetchRandomLetters()
+        newRandomLetters(2);
     }
     else {
         if (skips<=0) { message.innerText = "no more skips left"; }
@@ -152,14 +156,14 @@ function handleInput(event) // Handle enter key press to sumbit word
     if (event.key === 'Enter') {
         const word = input.value.trim();
         if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText) && !usedWords.includes(word)) {
-            checkIfWordExists(word).then(exists => {
+            isWordInFile(word).then(exists => {
                 if (exists) {
                     playSound(correctSound)
                     usedWords.push(word);
                     score += 150 * word.length;
                     wordCount += 1;
                     playPulseAnim()
-                    fetchRandomLetters()
+                    newRandomLetters(2);
                     input.value = '';
                     message.innerText = "";
                     wordCountText.innerText = String(wordCount);
@@ -203,7 +207,7 @@ function startGame() {
 
     wordCountText.innerText = String(wordCount);
     input.addEventListener('keydown', handleInput);
-    fetchRandomLetters()
+    newRandomLetters(2);
     
     intervalId = setInterval(() => {
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
@@ -247,7 +251,7 @@ button.addEventListener('click', () => {
     playSound(clickSound)
     message.innerText = "starting...";
     button.disabled = true;
-    fetch('http://127.0.0.1:5000/random-letters')
+    fetch('http://10.0.0.216:5000/random-letters')
   .then(response => {
     if (!response.ok) {
         message.innerText = "Network respone not Ok"
