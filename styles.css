@@ -158,9 +158,19 @@
     width: 30px;
     height: 30px;
     filter: invert(1);
+    transition: opacity 0.3s;
 }
 .option-button:focus img, .option-button:hover img
 {
+    opacity: 25%;
+}
+@media (max-width: 768px) {
+    .option-button:focus img,
+    .option-button:hover img {
+        opacity: 100%;
+    }
+}
+.option-button.clicked img {
     opacity: 25%;
 }
 .options-wrapper 
