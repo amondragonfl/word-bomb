@@ -45,6 +45,7 @@ const lostSound = new Audio('assets/lost_sound.wav');
 const clockTickSound = new Audio('assets/clocktick_sound.wav');
 const backgroundMusic = new Audio('assets/background_music.mp3');
 const wordCountText = document.getElementsByClassName("word-count")[0];
+const skipCountDiamonds = document.getElementsByClassName("skip-count")[0];
 backgroundMusic.loop = true;
 clockTickSound.loop = true;
 
@@ -59,6 +60,7 @@ skipButton.addEventListener('click', function() {
         input.value = '';
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
+        skipCountDiamonds.innerText = Array(skips).fill('◇').join(' ');
         fetchRandomLetters()
     }
     else {
@@ -212,6 +214,7 @@ function stopGame()
 {
     message.innerText = "";
     skips = 3;
+    skipCountDiamonds.innerText = Array(skips).fill('◇').join(' ');
     gameRunning = false;
     usedWords = []
     if (!clockTickSound.paused) {
