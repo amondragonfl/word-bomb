@@ -1,4 +1,3 @@
-let intervalId;
 let wordFileContent = null;
 let wordFileUrl = "./words_alpha.txt"
 
@@ -190,30 +189,23 @@ function handleInput(event) // Handle enter key press to sumbit word
     }
 }
 
+let lastTime = performance.now();
+function updateCountdown()
+{
+    if(!gameRunning) return;
+    let width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 100
+    const currentTime = performance.now();
+    const deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
 
-function startGame() {
-    document.getElementsByClassName('letter-seq')[0].style.textTransform = 'uppercase';
-    gameRunning = true;
-    clockTickSound.play();
-    if (enableMusic && backgroundMusic.paused) {  
-        backgroundMusic.currentTime = 0;
-        backgroundMusic.play() 
-    }
-    score = 0;
-    wordCount = 0;
-    skips = 3;
-    usedWords = []
-    percentageSubtract = 0.1;
-
-    wordCountText.innerText = String(wordCount);
-    input.addEventListener('keydown', handleInput);
-    newRandomLetters(2);
-    
-    intervalId = setInterval(() => {
-        const width = parseFloat(computedStyleCountdown.getPropertyValue("--width")) || 0
-        if (width > 0)
+    const timeFactor = deltaTime / 1000; 
+    percentageSubtract = 0.05;
+    console.log(`Current Width: ${width}, Percentage Subtract: ${percentageSubtract}`);
+    if (wordCount > 15) {percentageSubtract = Math.min(wordCount/180.0, .60)}
+    if (width > 0)
         {
-                countdown.style.setProperty("--width", width - percentageSubtract)
+            width -= percentageSubtract * timeFactor * 100;
+            countdown.style.setProperty("--width", width)
         }
         else
         {
@@ -221,6 +213,7 @@ function startGame() {
             if (skips <= 0 )
             {
                 stopGame()
+                return;
             }
             else 
             {
@@ -231,9 +224,31 @@ function startGame() {
 
             }
         }
-        if (wordCount > 15) {percentageSubtract = Math.min(wordCount/150.0, .65)}
+        requestAnimationFrame(updateCountdown);
 
-    }, 5)
+}
+
+
+function startGame() {
+    lastTime = performance.now();
+    document.getElementsByClassName('letter-seq')[0].style.textTransform = 'uppercase';
+    gameRunning = true;
+    countdown.style.setProperty("--width", 100)
+    clockTickSound.play();
+    if (enableMusic && backgroundMusic.paused) {  
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play() 
+    }
+    score = 0;
+    wordCount = 0;
+    skips = 3;
+    usedWords = []
+    percentageSubtract = 0.9;
+
+    wordCountText.innerText = String(wordCount);
+    input.addEventListener('keydown', handleInput);
+    newRandomLetters(2);
+    requestAnimationFrame(updateCountdown);
     
 }
 
@@ -250,7 +265,7 @@ function stopGame()
         clockTickSound.currentTime = 0; 
     }
     input.removeEventListener('keydown', handleInput);
-    clearInterval(intervalId);
+    gameRunning = false;
     input.disabled = true;
     countdown.style.setProperty("--width", 100)
     document.getElementsByClassName('letter-seq')[0].innerText = "Word Bomb";
@@ -258,6 +273,7 @@ function stopGame()
     button.focus();
     input.value = '';
 }
+
 
 button.addEventListener('click', () => {
     playSound(clickSound)
@@ -269,3 +285,4 @@ button.addEventListener('click', () => {
     startGame(); 
     button.blur();
 });
+
