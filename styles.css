@@ -158,7 +158,7 @@
     width: 30px;
     height: 30px;
     filter: invert(1);
-    transition: opacity 0.3s;
+    transition: opacity 0.1s;
 }
 .option-button:focus img, .option-button:hover img
 {
