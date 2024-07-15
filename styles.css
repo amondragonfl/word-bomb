@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('assets/Teko-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBM';
+    src: url('assets/IBMPlexMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .game-wrapper
 {
     display: flex;
@@ -16,18 +30,19 @@
     border-radius: 10px;
     text-transform: uppercase;
     outline: none;
-    border: 1px solid #ccc;
-    color: rgb(100, 99, 99);
+    border: 1px solid #686D76;
+    color: black;
+    background-color: #d4d3d3;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
     margin-top: 13px;
-    font-family:'Courier New', Courier, monospace;
+    font-family:'IBM', sans-serif;
     transition: border-color 0.3s;
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgb(147, 236, 135);;
+        box-shadow: 0 0 0 0 #DC5F00;
     }
     70% {
         box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
@@ -59,7 +74,6 @@
     border-radius: 2px;
     height: clamp(2px, 50%, 5px);
     background-color: gray;
-    color: green;
 }
 .countdown-bar::before
 {
@@ -67,7 +81,7 @@
     display: flex;
     align-items: center;
     position: absolute;
-    background-color: rgb(156, 255, 7);
+    background-color: #DC5F00;
     height: 100%;
     width: calc(var(--width, 100) * 1%);
     border-radius: 2px;
@@ -75,27 +89,29 @@
 }
 .letter-seq
 {
-    margin-bottom: 10px;
-    font-size: clamp(60px, 15vw, 90px);
+    font-size: clamp(70px, 15vw, 150px);
     text-align: center;
-    font-family:'Courier New', Courier, monospace;
-    color: rgb(63, 63, 63);
+    font-family:'MyFont', sans-serif;
+    color: white;
     text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
 }
 
 .play-but
 {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 200px;
     height: 50px;
     font-family: "Roboto", sans-serif;
-    background-color: rgb(147, 236, 135);
+    background-color: #DC5F00;
     color: white;
     font-size: 28px;
     border-radius: 15px;
     cursor: pointer;
     text-align: center;
-    font-weight: bold;
+    font-weight: bolder;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
@@ -112,7 +128,7 @@
 }
 
 .play-but:disabled {
-    background-color: gray; 
+    background-color: #6b2f02; 
     cursor: not-allowed;
     box-shadow: none; 
     transform: none; 
@@ -120,29 +136,13 @@
 
 .message
 {
+    margin-top: 10px;
+    
     font-size: 20px;
     text-align: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: rgb(131, 131, 131);
+    font-family:'IBM', sans-serif;
+    color: white;
     text-transform: lowercase; 
-}
-
-.stats
-{
-    display: flex;
-    align-items: center;
-}
-
-.score, .skips, .words
-{
-    margin-bottom: 0px;
-    margin-left: 30px;
-    font-size: 27px;
-    text-align: left;
-    font-family: 'Courier New', Courier, monospace;
-    color: rgb(63, 63, 63);
-    text-transform: uppercase; 
-    margin-top: 20px;
 }
 
 .option-button {
@@ -154,13 +154,14 @@
 }
 .option-button img
 {
-    opacity: 30%;
+    opacity: 90%;
     width: 30px;
     height: 30px;
+    filter: invert(1);
 }
 .option-button:focus img, .option-button:hover img
 {
-    opacity: 70%;
+    opacity: 25%;
 }
 .options-wrapper 
 {
@@ -170,6 +171,11 @@
 {
     margin-top: 20px;
     margin-left: 10px;
+}
+
+body
+{
+    background-color:#1d1d1d;
 }
 
 

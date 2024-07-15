@@ -38,9 +38,6 @@ const button = document.querySelector('.play-but');
 const countdown = document.getElementsByClassName("countdown-bar")[0];
 const computedStyleCountdown = getComputedStyle(countdown)
 const message = document.getElementsByClassName('message')[0];
-const score_text = document.getElementsByClassName('score')[0];
-const wordCountText = document.getElementsByClassName('words')[0];
-const skipsText = document.getElementsByClassName('skips')[0];
 const correctSound = new Audio('assets/correct_sound.wav');
 const incorrectSound = new Audio('assets/incorrect_sound.wav');
 const clickSound = new Audio('assets/click_sound.wav');
@@ -59,7 +56,6 @@ skipButton.addEventListener('click', function() {
         playSound(clickSound)
         skips -= 1;
         input.value = '';
-        skipsText.innerText = "Skips: " + String(skips)
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
         fetchRandomLetters()
@@ -147,8 +143,6 @@ function handleInput(event) // Handle enter key press to sumbit word
                     usedWords.push(word);
                     score += 150 * word.length;
                     wordCount += 1;
-                    score_text.innerText = "score: " + String(score)
-                    wordCountText.innerText = "words: " + wordCount;
                     playPulseAnim()
                     fetchRandomLetters()
                     input.value = '';
@@ -190,9 +184,6 @@ function startGame() {
     skips = 3;
     usedWords = []
     percentageSubtract = 0.1;
-    score_text.innerText = "score: " + String(score)
-    wordCountText.innerText = "words: " + wordCount;
-    skipsText.innerText = "Skips: " + String(skips)
     input.addEventListener('keydown', handleInput);
     fetchRandomLetters()
     
@@ -217,7 +208,6 @@ function stopGame()
 {
     message.innerText = "";
     skips = 3;
-    skipsText.innerText = "Skips: " + String(skips)
     gameRunning = false;
     usedWords = []
     if (!clockTickSound.paused) {
