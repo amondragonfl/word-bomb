@@ -11,7 +11,7 @@ Install python requirements.
 
     pip install flask flask_cors
 
-Run the server locally (Make sure you are on the project directory).
+Change to project directory and run the server locally.
 
      python server.py
 
