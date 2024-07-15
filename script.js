@@ -218,7 +218,18 @@ function startGame() {
         else
         {
             playSound(lostSound)
-            stopGame()
+            if (skips <= 0 )
+            {
+                stopGame()
+            }
+            else 
+            {
+                skips -= 1;
+                skipCountDiamonds.innerText = Array(skips).fill('⬡').join(' ');
+                newRandomLetters(2);
+                countdown.style.setProperty("--width", 100)
+
+            }
         }
         if (wordCount > 15) {percentageSubtract = Math.min(wordCount/150.0, .65)}
 
