@@ -67,7 +67,7 @@ skipButton.addEventListener('click', function() {
         input.value = '';
         const width = parseFloat(computedStyleCountdown.getPropertyValue("--width"))
         countdown.style.setProperty("--width", 100)
-        skipCountDiamonds.innerText = Array(skips).fill('◇').join(' ');
+        skipCountDiamonds.innerText = Array(skips).fill('⬡').join(' ');
         newRandomLetters(2);
     }
     else {
@@ -154,7 +154,7 @@ function handleInput(event) // Handle enter key press to sumbit word
 {
     if (event.key === 'Enter') {
         const word = input.value.trim();
-        if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText) && !usedWords.includes(word)) {
+        if (word && word.length>2 && word.toUpperCase().includes(document.getElementsByClassName('letter-seq')[0].innerText.toUpperCase()) && !usedWords.includes(word)) {
             isWordInFile(word).then(exists => {
                 if (exists) {
                     playSound(correctSound)
@@ -192,6 +192,7 @@ function handleInput(event) // Handle enter key press to sumbit word
 
 
 function startGame() {
+    document.getElementsByClassName('letter-seq')[0].style.textTransform = 'uppercase';
     gameRunning = true;
     clockTickSound.play();
     if (enableMusic && backgroundMusic.paused) {  
@@ -227,9 +228,10 @@ function startGame() {
 
 function stopGame()
 {
+    document.getElementsByClassName('letter-seq')[0].style.textTransform = 'none';
     message.innerText = "";
     skips = 3;
-    skipCountDiamonds.innerText = Array(skips).fill('◇').join(' ');
+    skipCountDiamonds.innerText = Array(skips).fill('⬡').join(' ');
     gameRunning = false;
     usedWords = []
     if (!clockTickSound.paused) {
@@ -240,7 +242,7 @@ function stopGame()
     clearInterval(intervalId);
     input.disabled = true;
     countdown.style.setProperty("--width", 100)
-    document.getElementsByClassName('letter-seq')[0].innerText = "word bomb";
+    document.getElementsByClassName('letter-seq')[0].innerText = "Word Bomb";
     button.disabled = false;
     button.focus();
     input.value = '';

@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Karnak';
+    src: url('assets/NYTKarnakCondensed.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .game-wrapper
 {
     display: flex;
@@ -42,7 +49,7 @@
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 #DC5F00;
+        box-shadow: 0 0 0 0 #09ff00;
     }
     70% {
         box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
@@ -81,7 +88,7 @@
     display: flex;
     align-items: center;
     position: absolute;
-    background-color: #DC5F00;
+    background-color: #ffffff;
     height: 100%;
     width: calc(var(--width, 100) * 1%);
     border-radius: 2px;
@@ -89,11 +96,11 @@
 }
 .letter-seq
 {
-    font-size: clamp(70px, 15vw, 150px);
+    font-size: clamp(70px, 15vw, 80px);
     text-align: center;
-    font-family:'MyFont', sans-serif;
+    font-family:'Karnak', sans-serif;
     color: white;
-    text-transform: uppercase;
+    text-transform: none;
     margin: 0;
     padding: 0;
     line-height: 1;
@@ -104,20 +111,21 @@
     margin-top: 10px;
     width: 200px;
     height: 50px;
-    font-family: "Roboto", sans-serif;
-    background-color: #DC5F00;
-    color: white;
-    font-size: 28px;
+    font-family: "IBM", sans-serif;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
     border-radius: 15px;
     cursor: pointer;
     text-align: center;
-    font-weight: bolder;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
     -webkit-transition-property: box-shadow, transform;
     transition-property: box-shadow, transform;
     border: 0px;
+    touch-action: none;
 }
 
 .play-but:hover, .play-but:focus, .play-but:active
@@ -128,7 +136,7 @@
 }
 
 .play-but:disabled {
-    background-color: #6b2f02; 
+    background-color: gray; 
     cursor: not-allowed;
     box-shadow: none; 
     transform: none; 
@@ -159,6 +167,7 @@
     height: 30px;
     filter: invert(1);
     transition: opacity 0.1s;
+    touch-action: none;
 }
 .option-button:focus img, .option-button:hover img
 {
