@@ -51,6 +51,10 @@ clockTickSound.loop = true;
 
 const skipButton = document.getElementById("skip-button");
 skipButton.addEventListener('click', function() {
+    skipButton.classList.add('clicked');
+    setTimeout(() => {
+        skipButton.classList.remove('clicked');
+    }, 100);
     skipButton.blur();
     if (gameRunning && skips>0)
     {
@@ -72,6 +76,10 @@ skipButton.addEventListener('click', function() {
 
 const musicButton = document.getElementById("music-button");
 musicButton.addEventListener('click', function(){
+    musicButton.classList.add('clicked');
+    setTimeout(() => {
+        musicButton.classList.remove('clicked');
+    }, 100);
     musicButton.blur();
     playSound(clickSound)
     if (backgroundMusic.paused)
@@ -90,6 +98,10 @@ musicButton.addEventListener('click', function(){
 
 const restartButton = document.getElementById("restart-button");
 restartButton.addEventListener('click', function() {
+    restartButton.classList.add('clicked');
+    setTimeout(() => {
+        restartButton.classList.remove('clicked');
+    }, 100);
     restartButton.blur();
     if (gameRunning)
     {
