@@ -3,7 +3,7 @@ Single-player word game based on Word Bomb and BombParty.
 
 Play [HERE!](https://amondragonfl.github.io/word-bomb/)
 
-![game_screenshot](https://github.com/user-attachments/assets/80296772-3f29-449e-b661-07430dbef2c9)
+![Game-screenshot](https://github.com/user-attachments/assets/960104ee-6086-4216-8612-8a3e3aada40c)
 
 How to play
 ------
